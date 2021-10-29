@@ -1,4 +1,4 @@
-const { io } = require("./server");
+const { io } = require(".");
 
 const emitBinance = (data) => {
   io.emit("update:binance", data);
