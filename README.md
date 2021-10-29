@@ -11,7 +11,7 @@ An API that aggregates crypto market data
 
 ## Local Setup Guide
 
-1. Install dependencies using `yarn`CLI command.
+1. Install dependencies using `yarn` CLI command.
 2. Start the app using the following scripts.
 
    ### `yarn start`
