@@ -10,13 +10,14 @@ const createCoinbaseSocket = () => {
 const initCoinbaseSocketHandlers = () => {
   // Websocket event handlers
   coinbaseStream.on("open", () => {
-    console.log("Coinbase Socket Connected");
+    console.log("Coinbase socket connected");
 
     const subscribeParams = {
       type: "subscribe",
       product_ids: ["BTC-USD", "ETH-USD"],
       channels: ["ticker"],
     };
+    // Check subscriptions.
     coinbaseStream.send(JSON.stringify(subscribeParams));
   });
 
@@ -69,13 +70,21 @@ const initCoinbaseSocketHandlers = () => {
 };
 
 const initCoinbaseStream = () => {
-  createCoinbaseSocket();
-  initCoinbaseSocketHandlers();
+  if (coinbaseStream == null || coinbaseStream.readyState == WebSocket.CLOSED) {
+    createCoinbaseSocket();
+    initCoinbaseSocketHandlers();
+  }
 };
 
 const disconnectCoinbaseStream = () => {
-  if (coinbaseStream) {
-    coinbaseStream.close();
+  try {
+    if (coinbaseStream) {
+      coinbaseStream.close();
+    }
+  } catch (e) {
+    e.message == "WebSocket was closed before the connection was established"
+      ? console.log("Error: ", e.message, "(disconnectCoinbaseStream())")
+      : console.log(e);
   }
 };
 module.exports = { initCoinbaseStream, disconnectCoinbaseStream };

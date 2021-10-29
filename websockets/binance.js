@@ -7,23 +7,21 @@ const createBinanceSocket = () => {
   binanceStream = new WebSocket(
     "wss://stream.binance.com:9443/stream?streams=btcbusd@bookTicker/ethbusd@bookTicker"
   );
-
-  console.log("start binance stream");
 };
 
 const initBinanceSocketHandlers = () => {
   // Websocket event handlers
   binanceStream.on("open", () => {
-    console.log("Binance Socket Connected");
+    console.log("Binance socket connected");
 
+    const subscribeParams = {
+      method: "LIST_SUBSCRIPTIONS",
+      id: 1,
+    };
     // Check subscriptions.
-    binanceStream.send(
-      JSON.stringify({
-        method: "LIST_SUBSCRIPTIONS",
-        id: 1,
-      })
-    );
+    binanceStream.send(JSON.stringify(subscribeParams));
   });
+
   binanceStream.on("close", () => {
     console.log("Binance socket disconnected");
   });
@@ -76,17 +74,22 @@ const initBinanceSocketHandlers = () => {
 };
 
 const initBinanceStream = () => {
-  createBinanceSocket();
-  initBinanceSocketHandlers();
-};
-
-const disconnectBinanceStream = () => {
-  if (binanceStream) {
-    binanceStream.close();
+  if (binanceStream == null || binanceStream.readyState == WebSocket.CLOSED) {
+    createBinanceSocket();
+    initBinanceSocketHandlers();
   }
 };
 
-module.exports = {
-  initBinanceStream,
-  disconnectBinanceStream,
+const disconnectBinanceStream = () => {
+  try {
+    if (binanceStream) {
+      binanceStream.close();
+    }
+  } catch (e) {
+    e.message == "WebSocket was closed before the connection was established"
+      ? console.log("Error: ", e.message, "(disconnectBinanceStream())")
+      : console.log(e);
+  }
 };
+
+module.exports = { initBinanceStream, disconnectBinanceStream };

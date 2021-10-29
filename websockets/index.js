@@ -1,6 +1,8 @@
 const binance = require("./binance");
 const coinbase = require("./coinbase");
 
+let areStreamsClosed = true;
+
 const initializeStreams = () => {
   binance.initBinanceStream();
   coinbase.initCoinbaseStream();
@@ -11,4 +13,4 @@ const disconnectStreams = () => {
   coinbase.disconnectCoinbaseStream();
 };
 
-module.exports = { initializeStreams, disconnectStreams };
+module.exports = { areStreamsClosed, initializeStreams, disconnectStreams };
