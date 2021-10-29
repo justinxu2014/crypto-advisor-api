@@ -9,7 +9,7 @@ const stopAutoDisconnect = () => {
     clearInterval(autoDisconnectID);
     autoDisconnectID = null;
 
-    console.log("auto disconnect off");
+    console.log("Auto-disconnect off");
   }
 };
 
@@ -26,7 +26,7 @@ const disconnectStreamsCheck = () => {
 // checks connection count every minute.
 const initAutoDisconnect = () => {
   if (!autoDisconnectID) {
-    console.log("auto disconnect on");
+    console.log("Auto-disconnect on");
     autoDisconnectID = setInterval(disconnectStreamsCheck, 10000);
   }
 };

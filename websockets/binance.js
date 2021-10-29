@@ -22,6 +22,11 @@ const initBinanceSocketHandlers = () => {
     binanceStream.send(JSON.stringify(subscribeParams));
   });
 
+  binanceStream.on("ping", (message) => {
+    console.log("PING Binance: ", message.toString());
+    binanceStream.pong();
+  });
+
   binanceStream.on("close", () => {
     console.log("Binance socket disconnected");
   });

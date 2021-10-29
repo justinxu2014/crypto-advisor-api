@@ -25,8 +25,9 @@ const initCoinbaseSocketHandlers = () => {
     console.log("Coinbase socket disconnected");
   });
 
-  coinbaseStream.on("ping", () => {
-    coinbaseStream.send();
+  coinbaseStream.on("ping", (ping) => {
+    console.log("PING Coinbase: ", ping.toString());
+    coinbaseStream.pong();
   });
 
   let coinbaseETHBuyPrice = 0;
