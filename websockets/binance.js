@@ -14,12 +14,12 @@ const initBinanceSocketHandlers = () => {
   binanceStream.on("open", () => {
     console.log("Binance socket connected");
 
-    const subscribeParams = {
+    const checkSubParams = {
       method: "LIST_SUBSCRIPTIONS",
       id: 1,
     };
     // Check subscriptions.
-    binanceStream.send(JSON.stringify(subscribeParams));
+    binanceStream.send(JSON.stringify(checkSubParams));
   });
 
   binanceStream.on("ping", (message) => {

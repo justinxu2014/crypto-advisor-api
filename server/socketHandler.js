@@ -6,6 +6,7 @@ const initSocketioHandlers = () => {
   io.on("connection", (socket) => {
     const id = socket.id;
     console.log("Connected: ", id);
+    console.log("Total Connections: ", io.engine.clientsCount);
 
     if (websockets.areStreamsClosed) {
       websockets.initializeStreams();
@@ -16,7 +17,7 @@ const initSocketioHandlers = () => {
 
     socket.on("disconnect", () => {
       console.log("Disconnected: ", id);
-      console.log(io.engine.clientsCount);
+      console.log("Total Connections: ", io.engine.clientsCount);
     });
   });
 };

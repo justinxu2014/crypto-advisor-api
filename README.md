@@ -1,6 +1,6 @@
 # Crypto Advisor API
 
-An API that aggregates crypto market data
+An API that aggregates crypto market data streams
 
 ## Features
 
@@ -34,7 +34,7 @@ An API that aggregates crypto market data
 - `/server`
 
   - `index.js`\
-    Express + Socket.io + middlewares configs are initialized here.
+    Express + Socket.io + middlewares cos-figs are initialized here.
   - `socketHandler.js`\
     Socket.io event handlers are initialized here.
   - `socketEmits.js`\
